@@ -1,0 +1,101 @@
+id,english,khmer,romanization
+001,Hello (casual),សួស្តី,suostei
+002,Hello (formal),ជំរាបសួរ,chumreap suor
+003,Goodbye,លាហើយ,lia haey
+004,Thank you,អរគុណ,arkoun
+005,You're welcome,មិនអីទេ,min ei te
+006,Please,សូម,som
+007,Yes (spoken by a man),បាទ,baat
+008,Yes (spoken by a woman),ចាស,chas
+009,No,ទេ,te
+010,Sorry / Excuse me,សុំទោស,som tos
+011,Nice to meet you,រីករាយដែលបានស្គាល់អ្នក,rikreay del ban skoal neak
+012,Good morning,អរុណសួស្តី,aroun suostei
+013,I / me,ខ្ញុំ,khnhom
+014,You,អ្នក,neak
+015,He / She,គាត់,koat
+016,We,យើង,yeung
+017,They,ពួកគេ,puok ke
+018,Name,ឈ្មោះ,chhmoh
+019,What,អ្វី,avei
+020,Who,នរណា,norna
+021,Where,ឯណា,ae na
+022,When,ពេលណា,pel na
+023,Why,ហេតុអ្វី,het avei
+024,How,យ៉ាងម៉េច,yang mech
+025,How much / how many,ប៉ុន្មាន,ponman
+026,One,មួយ,muoy
+027,Two,ពីរ,pii
+028,Three,បី,bei
+029,Four,បួន,buon
+030,Five,ប្រាំ,pram
+031,Six,ប្រាំមួយ,pram muoy
+032,Seven,ប្រាំពីរ,pram pii
+033,Eight,ប្រាំបី,pram bei
+034,Nine,ប្រាំបួន,pram buon
+035,Ten,ដប់,dop
+036,Eleven,ដប់មួយ,dop muoy
+037,Twenty,ម្ភៃ,mphei
+038,Thirty,សាមសិប,samsip
+039,One hundred,មួយរយ,muoy roy
+040,One thousand,មួយពាន់,muoy poan
+041,Go,ទៅ,tov
+042,Come,មក,mok
+043,Eat,ញ៉ាំ,nyam
+044,Drink,ផឹក,pheuk
+045,Want,ចង់,chong
+046,Like,ចូលចិត្ត,chol chet
+047,Have,មាន,mean
+048,Know,ដឹង,deung
+049,Understand,យល់,yol
+050,Speak / say,និយាយ,niyeay
+051,See / look,មើល,merl
+052,Sleep,ដេក,dek
+053,Family,គ្រួសារ,kruosar
+054,Mother,ម្តាយ,mday
+055,Father,ឪពុក,ov puk
+056,Older sibling,បង,bong
+057,Younger sibling,ប្អូន,paoun
+058,Friend,មិត្ត,mit
+059,Today,ថ្ងៃនេះ,thngai nih
+060,Tomorrow,ថ្ងៃស្អែក,thngai s'aek
+061,Yesterday,ម្សិលមិញ,msoel meun
+062,Morning,ព្រឹក,preuk
+063,Afternoon,រសៀល,rosiel
+064,Evening,ល្ងាច,lngeach
+065,Night,យប់,yup
+066,Day,ថ្ងៃ,thngai
+067,Water,ទឹក,teuk
+068,Rice / food,បាយ,bai
+069,Fish,ត្រី,trei
+070,Chicken,មាន់,moan
+071,Fruit,ផ្លែឈើ,phlae chher
+072,Vegetable,បន្លែ,banlae
+073,Coffee,កាហ្វេ,kafe
+074,Tea,តែ,tae
+075,Red,ក្រហម,krohom
+076,Blue,ខៀវ,khiev
+077,Green,បៃតង,baitong
+078,Yellow,លឿង,leung
+079,White,ស,sar
+080,Black,ខ្មៅ,khmav
+081,Left,ឆ្វេង,chveng
+082,Right,ស្តាំ,sdam
+083,Near,ជិត,chit
+084,Far,ឆ្ងាយ,chngay
+085,Market,ផ្សារ,phsar
+086,House / home,ផ្ទះ,phteah
+087,School,សាលា,sala
+088,Hospital,មន្ទីរពេទ្យ,montii pet
+089,Bathroom,បន្ទប់ទឹក,bantob teuk
+090,Good,ល្អ,la-or
+091,Bad,អាក្រក់,akrak
+092,Big,ធំ,thom
+093,Small,តូច,toch
+094,Hot,ក្តៅ,kdav
+095,Cold,ត្រជាក់,trocheak
+096,Expensive,ថ្លៃ,thlai
+097,Delicious,ឆ្ងាញ់,chngañ
+098,What is your name?,តើអ្នកឈ្មោះអ្វី?,tae neak chhmoh avei?
+099,How are you?,តើអ្នកសុខសប្បាយទេ?,tae neak sok sabay te?
+100,How much is this?,នេះថ្លៃប៉ុន្មាន?,nih thlai ponman?
