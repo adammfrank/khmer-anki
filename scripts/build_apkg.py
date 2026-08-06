@@ -12,27 +12,85 @@ MEDIA_DIR = os.path.join(BASE_DIR, "media")
 OUT_PATH = os.path.join(BASE_DIR, "khmer_beginner_100.apkg")
 
 # Fixed IDs so re-running this script updates the same deck/model instead of
-# creating duplicates in Anki.
+# creating duplicates in Anki. Keep MODEL_ID stable across field/template
+# changes -- Anki matches notetypes by this ID and updates it in place, and
+# matches notes by guid_for(id) below, which lets re-imports update existing
+# cards' content without resetting their review scheduling.
 MODEL_ID = 1607392319
 DECK_ID = 2059412232
+
+# Khmer stacks vowel/diacritic marks above and below the consonant line, so it
+# needs a generous line-height and a Khmer-capable font or glyphs clip. The
+# font stack covers macOS, Windows, Android and the Anki desktop default.
+CSS = """
+.card {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 20px;
+  text-align: center;
+  color: #22303c;
+  background-color: #fbfbfd;
+  padding: 28px 18px;
+}
+.card.nightMode, .nightMode .card {
+  color: #e6e8ea;
+  background-color: #2c2c2e;
+}
+
+.english {
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.khmer {
+  font-family: "Noto Sans Khmer", "Khmer OS", "Khmer Sangam MN",
+               "Leelawadee UI", "Nirmala UI", sans-serif;
+  font-size: 46px;
+  line-height: 1.9;
+  padding: 4px 0;
+}
+
+.roman {
+  font-size: 17px;
+  font-style: italic;
+  letter-spacing: 0.4px;
+  color: #7c8894;
+  margin-top: 2px;
+}
+.card.nightMode .roman, .nightMode .card .roman { color: #9aa4ae; }
+
+.audio { margin-top: 14px; }
+
+hr#answer {
+  border: none;
+  border-top: 1px solid #dfe3e8;
+  width: 55%;
+  margin: 22px auto;
+}
+.card.nightMode hr#answer, .nightMode .card hr#answer { border-top-color: #45464a; }
+"""
 
 MODEL = genanki.Model(
     MODEL_ID,
     "Khmer Basic",
-    fields=[{"name": "English"}, {"name": "Khmer"}, {"name": "Audio"}],
+    fields=[{"name": "English"}, {"name": "Khmer"}, {"name": "Romanization"}, {"name": "Audio"}],
+    css=CSS,
     templates=[
         {
             "name": "English -> Khmer",
-            "qfmt": '<div style="font-size:28px">{{English}}</div>',
+            "qfmt": '<div class="english">{{English}}</div>',
             "afmt": '{{FrontSide}}<hr id="answer">'
-                    '<div style="font-size:36px">{{Khmer}}</div>'
-                    "{{Audio}}",
+                    '<div class="khmer">{{Khmer}}</div>'
+                    '<div class="roman">{{Romanization}}</div>'
+                    '<div class="audio">{{Audio}}</div>',
         },
         {
             "name": "Khmer -> English",
-            "qfmt": '<div style="font-size:36px">{{Khmer}}</div>{{Audio}}',
+            "qfmt": '<div class="khmer">{{Khmer}}</div>'
+                    '<div class="roman">{{Romanization}}</div>'
+                    '<div class="audio">{{Audio}}</div>',
             "afmt": '{{FrontSide}}<hr id="answer">'
-                    '<div style="font-size:28px">{{English}}</div>',
+                    '<div class="english">{{English}}</div>',
         },
     ],
 )
@@ -46,7 +104,7 @@ def main():
     media_files = []
     missing = []
 
-    for row in rows:
+    for position, row in enumerate(rows, start=1):
         mp3_name = f"{row['id']}.mp3"
         mp3_path = os.path.join(MEDIA_DIR, mp3_name)
         if not os.path.exists(mp3_path):
@@ -56,10 +114,16 @@ def main():
             media_files.append(mp3_path)
             audio_field = f"[sound:{mp3_name}]"
 
+        # genanki defaults every card to new-queue position 0, which makes
+        # Anki's default "Card type, then order gathered" ordering introduce
+        # all 100 English->Khmer cards before any Khmer->English one. Real Anki
+        # gives each note a sequential position that both of its cards share,
+        # so a day's new cards gather both directions of the same word together.
         note = genanki.Note(
             model=MODEL,
-            fields=[row["english"], row["khmer"], audio_field],
+            fields=[row["english"], row["khmer"], row["romanization"], audio_field],
             guid=genanki.guid_for(row["id"]),
+            due=position,
         )
         deck.add_note(note)
 
