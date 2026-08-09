@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate Khmer TTS audio for data/khmer_100.csv using the Azure Speech REST API.
+"""Generate Khmer TTS audio for data/khmer_500.csv using the Azure Speech REST API.
 
 Requires AZURE_SPEECH_KEY and AZURE_SPEECH_REGION, either as environment
 variables or in a .env file in the project root (loaded automatically).
@@ -18,7 +18,7 @@ import xml.sax.saxutils as saxutils
 
 import requests
 
-CSV_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "khmer_100.csv")
+CSV_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "khmer_500.csv")
 ENV_PATH = os.path.join(os.path.dirname(__file__), "..", ".env")
 DEFAULT_VOICE = "km-KH-SreymomNeural"
 TOKEN_URL_FMT = "https://{region}.api.cognitive.microsoft.com/sts/v1.0/issueToken"
@@ -75,6 +75,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--test", action="store_true", help="Only generate the first 5 entries, into media/test/")
     parser.add_argument("--voice", default=DEFAULT_VOICE, help="Azure neural voice name")
+    parser.add_argument("--force", action="store_true", help="Regenerate audio that already exists")
     args = parser.parse_args()
 
     load_dotenv(ENV_PATH)
@@ -92,6 +93,18 @@ def main():
     else:
         out_dir = os.path.join(os.path.dirname(__file__), "..", "media")
     os.makedirs(out_dir, exist_ok=True)
+
+    # Only synthesise what is missing, so re-running after adding entries costs
+    # one request per new entry instead of re-billing the whole deck. --force
+    # regenerates everything, e.g. after switching voice.
+    if not args.force:
+        skipped = [r for r in rows if os.path.exists(os.path.join(out_dir, f"{r['id']}.mp3"))]
+        rows = [r for r in rows if not os.path.exists(os.path.join(out_dir, f"{r['id']}.mp3"))]
+        if skipped:
+            print(f"Skipping {len(skipped)} entries that already have audio (use --force to redo).")
+    if not rows:
+        print("Nothing to generate.")
+        return
 
     token = get_access_token(key, region)
     token_time = time.time()
